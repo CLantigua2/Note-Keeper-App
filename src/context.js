@@ -5,10 +5,10 @@ const Context = React.createContext();
 
 const reducer = (state, action) => {
 	switch (action.type) {
-		case 'SEARCH_NOTES':
+		case 'SET_SEARCH_TERM':
 			return {
 				...state,
-				notes: action.payload
+				searchTerm: action.params
 			};
 		case 'ADD_NOTE':
 			return {

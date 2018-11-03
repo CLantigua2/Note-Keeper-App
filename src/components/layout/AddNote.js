@@ -105,8 +105,8 @@ class FloatingActionButtonZoom extends React.Component {
 						});
 					})
 				);
-				this.setState({ title: '', textBody: '' });
 			})
+			.then(this.setState({ title: '', textBody: '' }))
 			.catch((err) => console.log(err));
 	};
 
