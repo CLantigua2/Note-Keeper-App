@@ -18,11 +18,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import axios from 'axios';
 // icons
 import Note from '@material-ui/icons/Note';
 import Label from '@material-ui/icons/Label';
-import Favorite from '@material-ui/icons/Favorite';
+// import Favorite from '@material-ui/icons/Favorite';
 import Reminder from '@material-ui/icons/Notifications';
 import Archive from '@material-ui/icons/Archive';
 import Trash from '@material-ui/icons/Delete';
@@ -157,12 +156,13 @@ class MiniDrawer extends React.Component {
 		this.setState({ open: false });
 	};
 
-	searchHandler = (dispatch, e) => {
-		const { searchTitle } = this.state;
-		this.setState({ [e.target.name]: e.target.value });
-		const allIds = axios.get('https://fe-notes.herokuapp.com/note/get/all');
-		allIds.filter(({ title }) => title.towLowerCase().match(searchTitle)).map((note) => note);
-	};
+	// searchHandler = (dispatch, e) => {
+	// 	this.setState(([ e.target.name ]: e.target.value));
+	// 	dispatch({
+	// 		type: 'SET_SEARCH_TERM',
+	// 		params: e.target.value
+	// 	});
+	// };
 
 	render() {
 		const { classes, theme } = this.props;
@@ -170,7 +170,8 @@ class MiniDrawer extends React.Component {
 		return (
 			<Consumer>
 				{(value) => {
-					const { dispatch } = value;
+					const { dispatch, handleChange, searchTitle } = value;
+					const { open } = this.state;
 					return (
 						<div className={classes.root}>
 							<CssBaseline />
@@ -178,16 +179,16 @@ class MiniDrawer extends React.Component {
 							<AppBar
 								position="fixed"
 								className={classNames(classes.appBar, {
-									[classes.appBarShift]: this.state.open
+									[classes.appBarShift]: open
 								})}
 							>
-								<Toolbar disableGutters={!this.state.open}>
+								<Toolbar disableGutters={!open}>
 									<IconButton
 										color="inherit"
 										aria-label="Open drawer"
 										onClick={this.handleDrawerOpen}
 										className={classNames(classes.menuButton, {
-											[classes.hide]: this.state.open
+											[classes.hide]: open
 										})}
 									>
 										<MenuIcon />
@@ -203,8 +204,8 @@ class MiniDrawer extends React.Component {
 										<InputBase
 											placeholder="Search by Title…"
 											name="searchTitle"
-											value={this.state.searchTitle}
-											onchange={() => this.searchHandler(e.target.value)}
+											value={searchTitle}
+											onChange={handleChange}
 											classes={{
 												root: classes.inputRoot,
 												input: classes.inputInput
@@ -216,9 +217,9 @@ class MiniDrawer extends React.Component {
 							<Drawer
 								variant="permanent"
 								classes={{
-									paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose)
+									paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose)
 								}}
-								open={this.state.open}
+								open={open}
 							>
 								<div className={classes.toolbar}>
 									<IconButton onClick={this.handleDrawerClose}>

@@ -30,22 +30,66 @@ export class Provider extends Component {
 		notes: [],
 		noteId: '',
 		isChecked: false,
-		searchTerm: '',
+		searchTitle: '',
+		title: '',
+		textBody: '',
 		dispatch: (action) => this.setState((state) => reducer(state, action))
 	};
 
 	componentDidMount() {
-		axios
-			.get('https://fe-notes.herokuapp.com/note/get/all')
-			.then((res) => {
-				this.setState({ notes: res.data });
-				console.log(res.data);
-			})
-			.catch((err) => console.log(err));
+		this.getAllNotes();
 	}
 
+	getAllNotes = () => {
+		setTimeout(() => {
+			axios
+				.get('https://fe-notes.herokuapp.com/note/get/all')
+				.then((res) => {
+					this.setState({ notes: res.data });
+					console.log(res.data);
+				})
+				.catch((err) => console.log(err));
+		}, 5000);
+	};
+
+	handleChange = (e) => {
+		this.setState({ [e.target.name]: e.target.value });
+	};
+
+	filterSearch = () => {
+		this.getAllNotes();
+		const { notes, searchTitle } = this.state;
+		return searchTitle
+			? notes.filter((note) => note.title.toLowerCase().indexOf(searchTitle.toLowerCase()) > -1)
+			: notes;
+	};
+
+	addNote = (e) => {
+		e.preventDefault();
+		const { title, textBody } = this.state;
+		if (title === '' && textBody === '') {
+			alert('Please edit at least one of the fields');
+		} else {
+			axios.post('https://fe-notes.herokuapp.com/note/create', { title, textBody });
+		}
+	};
+
 	render() {
-		return <Context.Provider value={this.state}>{this.props.children}</Context.Provider>;
+		const { notes, searchTitle } = this.state;
+		return (
+			<Context.Provider
+				value={{
+					notes: notes,
+					searchTitle: searchTitle,
+					handleChange: this.handleChange,
+					addNote: this.addNote,
+					title: this.title,
+					textBody: this.textBody
+				}}
+			>
+				{this.props.children}
+			</Context.Provider>
+		);
 	}
 }
 

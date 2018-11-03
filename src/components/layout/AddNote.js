@@ -75,40 +75,17 @@ class FloatingActionButtonZoom extends React.Component {
 		textBody: ''
 	};
 
-	handleChange = (event, value) => {
-		this.setState({ value });
-	};
+	// handleChange = (event, value) => {
+	// 	this.setState({ value });
+	// };
 
 	handleChangeIndex = (index) => {
 		this.setState({ value: index });
 	};
 
-	formHandler = (e) => {
-		this.setState({ [e.target.name]: e.target.value });
-	};
-
-	AddNote = (dispatch, e) => {
-		e.preventDefault();
-		const { title, textBody } = this.state;
-		axios
-			.post('https://fe-notes.herokuapp.com/note/create', { title, textBody })
-			.then((res) => {
-				console.log(res);
-				dispatch({
-					type: 'ADD_TASK',
-					payload: res.data
-				}).then(
-					axios.get('https://fe-notes.herokuapp.com/note/get/all').then((res) => {
-						dispatch({
-							type: 'GET_ALL_NOTES',
-							payload: res.data
-						});
-					})
-				);
-			})
-			.then(this.setState({ title: '', textBody: '' }))
-			.catch((err) => console.log(err));
-	};
+	// formHandler = (e) => {
+	// 	this.setState({ [e.target.name]: e.target.value });
+	// };
 
 	render() {
 		const { classes, theme } = this.props;
@@ -140,7 +117,7 @@ class FloatingActionButtonZoom extends React.Component {
 		return (
 			<Consumer>
 				{(value) => {
-					const { dispatch } = value;
+					const { addNote, handleChange, title, textBody } = value;
 					return (
 						<div className={classes.root}>
 							<AppBar position="static" color="default">
@@ -153,7 +130,7 @@ class FloatingActionButtonZoom extends React.Component {
 								>
 									<TabContainer dir={theme.direction}>
 										<form
-											onSubmit={this.AddNote.bind(this, dispatch)}
+											onSubmit={addNote}
 											className={classes.container}
 											noValidate
 											autoComplete="off"
@@ -166,8 +143,8 @@ class FloatingActionButtonZoom extends React.Component {
 												label="Add A Note Title..."
 												name="title"
 												margin="normal"
-												value={this.state.title}
-												onChange={this.formHandler}
+												value={title}
+												onChange={handleChange}
 											/>
 											<TextField
 												id="standard-required"
@@ -176,8 +153,8 @@ class FloatingActionButtonZoom extends React.Component {
 												label="What On Your Mind..."
 												name="textBody"
 												margin="normal"
-												value={this.state.textBody}
-												onChange={this.formHandler}
+												value={textBody}
+												onChange={handleChange}
 											/>
 											{fabs.map((fab, index) => (
 												<Zoom
