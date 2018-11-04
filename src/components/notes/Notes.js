@@ -1,5 +1,5 @@
 import React from 'react';
-import { connectStore } from '../../context';
+import { connectStore } from '../store/index.js';
 import Spinner from '../layout/Spinner';
 import Note from './Note';
 
@@ -8,6 +8,12 @@ class NoteContainer extends React.Component {
 		title: this.props.title,
 		text: this.props.textBody
 	};
+
+	componentDidMount() {
+		setTimeout(() => {
+			this.props.getAllNotes();
+		}, 1000);
+	}
 
 	render() {
 		const { notes, showMenu, getAllNotes } = this.props;

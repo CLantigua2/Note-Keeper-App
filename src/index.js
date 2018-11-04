@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from './components/store/index.js';
 
 const theme = createMuiTheme({
 	typography: {
@@ -17,9 +18,11 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
 	<Router>
-		<MuiThemeProvider theme={theme}>
-			<App />
-		</MuiThemeProvider>
+		<Provider>
+			<MuiThemeProvider theme={theme}>
+				<App />
+			</MuiThemeProvider>
+		</Provider>
 	</Router>,
 	document.getElementById('root')
 );

@@ -27,7 +27,7 @@ import Archive from '@material-ui/icons/Archive';
 import Trash from '@material-ui/icons/Delete';
 import SearchIcon from '@material-ui/icons/Search';
 // consumer
-import { Consumer } from '../../context';
+import { Consumer } from '../store/index';
 
 const drawerWidth = 240;
 

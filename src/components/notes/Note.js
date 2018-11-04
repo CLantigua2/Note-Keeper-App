@@ -31,7 +31,6 @@ class Note extends React.Component {
 		this.setState({ [e.target.name]: e.target.value });
 	};
 	toggleEditing = () => {
-		console.log('clicked');
 		const userIsEditing = !this.state.userIsEditing;
 		this.setState({ userIsEditing });
 	};
@@ -60,9 +59,7 @@ class Note extends React.Component {
 							onMouseEnter={handleMouseEnter}
 							onMouseLeave={handleMouseLeave}
 						>
-							<StyledIconContainer>
-								{icons.map((icon, idx) => (hovering ? icon : null))}
-							</StyledIconContainer>
+							<StyledIconContainer>{icons.map((icon) => (hovering ? icon : null))}</StyledIconContainer>
 							<form onSubmit={props.handleSubmit}>
 								<StyledTextAreaTitle
 									name={editTitle}

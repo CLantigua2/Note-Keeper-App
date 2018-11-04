@@ -13,7 +13,7 @@ import UpIcon from '@material-ui/icons/KeyboardArrowUp';
 import green from '@material-ui/core/colors/green';
 import TextField from '@material-ui/core/TextField';
 
-import { Consumer } from '../../context';
+import { Consumer } from '../store/index';
 
 function TabContainer(props) {
 	const { children, dir } = props;
