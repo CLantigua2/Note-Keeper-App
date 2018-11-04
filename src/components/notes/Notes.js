@@ -16,7 +16,7 @@ class NoteContainer extends React.Component {
 	}
 
 	render() {
-		const { notes, showMenu, getAllNotes } = this.props;
+		const { notes, showMenu, getAllNotes, handleChange, handleSubmit } = this.props;
 
 		if (notes === undefined || notes.length === 0) {
 			return <Spinner />;
@@ -27,13 +27,18 @@ class NoteContainer extends React.Component {
 					<div className="row">
 						{notes.map((note) => (
 							<Note
-								handleSubmit={this.props.handleSubmit}
+								handleSubmit={() => {
+									return handleSubmit(note._id);
+								}}
+								handleChange={handleChange}
 								key={note._id}
 								title={note.title}
 								id={note._id}
 								textBody={note.textBody}
 								showMenu={showMenu}
 								getAllNotes={getAllNotes}
+								editTitle="editTitle"
+								editBody="editBody"
 							/>
 						))}
 					</div>

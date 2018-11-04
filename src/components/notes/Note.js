@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+
 import Delete from '@material-ui/icons/DeleteForever';
 import Edit from '@material-ui/icons/Create';
 import Check from '@material-ui/icons/Check';
@@ -21,15 +22,10 @@ class Note extends React.Component {
 		super(props);
 		this.state = {
 			hovering: false,
-			userIsEditing: false,
-			editTitle: '',
-			editBody: ''
+			userIsEditing: false
 		};
 	}
 
-	handleChange = (e) => {
-		this.setState({ [e.target.name]: e.target.value });
-	};
 	toggleEditing = () => {
 		const userIsEditing = !this.state.userIsEditing;
 		this.setState({ userIsEditing });
@@ -37,7 +33,7 @@ class Note extends React.Component {
 
 	render() {
 		const { props } = this;
-		const { hovering, editTitle, editBody, handleChange, userIsEditing } = this.state;
+		const { hovering, userIsEditing } = this.state;
 		const handleMouseEnter = () => this.setState({ hovering: true });
 		const handleMouseLeave = () => this.setState({ hovering: false });
 		const icons = [
@@ -62,17 +58,17 @@ class Note extends React.Component {
 							<StyledIconContainer>{icons.map((icon) => (hovering ? icon : null))}</StyledIconContainer>
 							<form onSubmit={props.handleSubmit}>
 								<StyledTextAreaTitle
-									name={editTitle}
+									name="editTitle"
 									defaultValue={props.title}
 									label={props.title}
-									onChange={handleChange}
+									onChange={props.handleChange}
 								/>
 								<div className="card-text">
 									<StyledTextAreaBody
-										name={editBody}
+										name="editBody"
 										defaultValue={props.textBody}
 										label={props.textBody}
-										onChange={handleChange}
+										onChange={props.handleChange}
 									/>
 								</div>
 								<Button
@@ -99,9 +95,7 @@ class Note extends React.Component {
 							onMouseEnter={handleMouseEnter}
 							onMouseLeave={handleMouseLeave}
 						>
-							<StyledIconContainer>
-								{icons.map((icon, idx) => (hovering ? icon : null))}
-							</StyledIconContainer>
+							<StyledIconContainer>{icons.map((icon) => (hovering ? icon : null))}</StyledIconContainer>
 							<h1>{props.title}</h1>
 							<div className="card-text">
 								<p>{props.textBody}</p>

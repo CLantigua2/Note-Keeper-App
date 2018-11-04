@@ -36,10 +36,11 @@ export class Provider extends Component {
 	state = {
 		notes: [],
 		noteId: '',
-		isChecked: false,
 		searchTitle: '',
 		title: '',
 		textBody: '',
+		editTitle: '',
+		editBody: '',
 		dispatch: (action) => this.setState((state) => reducer(state, action))
 	};
 
@@ -52,7 +53,7 @@ export class Provider extends Component {
 	};
 
 	render() {
-		// console.log(this.state);
+		console.log(this.state);
 		return (
 			<Context.Provider
 				value={{

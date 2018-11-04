@@ -42,17 +42,14 @@ export function addNote(e) {
 	}
 }
 
-export function handleSubmit(e) {
-	e.preventDefault();
-	return ({ id, title, text }) => {
-		axios
-			.put(`https://fe-notes.herokuapp.com/note/edit/${id}`, {
-				title,
-				textBody: text
-			})
-			.then(() => {
-				this.getAllNotes();
-			})
-			.catch((err) => console.log(err));
-	};
+export function handleSubmit(id) {
+	axios
+		.put(`https://fe-notes.herokuapp.com/note/edit/${id}`, {
+			title: this.state.editTitle,
+			textBody: this.state.editBody
+		})
+		.then(() => {
+			getAllNotes();
+		})
+		.catch((err) => console.log(err));
 }
