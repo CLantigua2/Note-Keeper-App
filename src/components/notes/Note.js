@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-
+import ModalState from '../layout/modal/modal';
 import Delete from '@material-ui/icons/DeleteForever';
 import Edit from '@material-ui/icons/Create';
 import Check from '@material-ui/icons/Check';
@@ -40,9 +40,7 @@ class Note extends React.Component {
 			<StyledSVG key={0} alt="Edit" onClick={this.toggleEditing}>
 				<Edit />
 			</StyledSVG>,
-			<StyledSVG key={1} alt="Delete">
-				<Delete />
-			</StyledSVG>
+			<ModalState key={1} alt="Delete" />
 		];
 		if (userIsEditing) {
 			const { classes } = props;
