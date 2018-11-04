@@ -26,7 +26,6 @@ import Reminder from '@material-ui/icons/Notifications';
 import Archive from '@material-ui/icons/Archive';
 import Trash from '@material-ui/icons/Delete';
 import SearchIcon from '@material-ui/icons/Search';
-import AddNote from './AddNote';
 // consumer
 import { Consumer } from '../../context';
 
@@ -156,21 +155,13 @@ class MiniDrawer extends React.Component {
 		this.setState({ open: false });
 	};
 
-	// searchHandler = (dispatch, e) => {
-	// 	this.setState(([ e.target.name ]: e.target.value));
-	// 	dispatch({
-	// 		type: 'SET_SEARCH_TERM',
-	// 		params: e.target.value
-	// 	});
-	// };
-
 	render() {
 		const { classes, theme } = this.props;
 
 		return (
 			<Consumer>
 				{(value) => {
-					const { dispatch, handleChange, searchTitle } = value;
+					const { handleChange, searchTitle } = value;
 					const { open } = this.state;
 					return (
 						<div className={classes.root}>
@@ -259,7 +250,6 @@ class MiniDrawer extends React.Component {
 							</Drawer>
 							<main className={classes.content}>
 								<div className={classes.toolbar} />
-								<AddNote />
 							</main>
 						</div>
 					);

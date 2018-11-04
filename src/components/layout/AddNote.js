@@ -13,7 +13,6 @@ import UpIcon from '@material-ui/icons/KeyboardArrowUp';
 import green from '@material-ui/core/colors/green';
 import TextField from '@material-ui/core/TextField';
 
-import axios from 'axios';
 import { Consumer } from '../../context';
 
 function TabContainer(props) {
@@ -35,8 +34,11 @@ const styles = (theme) => ({
 	root: {
 		backgroundColor: theme.palette.background.paper,
 		width: 500,
+		display: 'flex',
+		justifyContent: 'center',
 		position: 'relative',
-		minHeight: 200
+		minHeight: 200,
+		marginBottom: '35px'
 	},
 	fab: {
 		position: 'absolute',
@@ -75,17 +77,9 @@ class FloatingActionButtonZoom extends React.Component {
 		textBody: ''
 	};
 
-	// handleChange = (event, value) => {
-	// 	this.setState({ value });
-	// };
-
 	handleChangeIndex = (index) => {
 		this.setState({ value: index });
 	};
-
-	// formHandler = (e) => {
-	// 	this.setState({ [e.target.name]: e.target.value });
-	// };
 
 	render() {
 		const { classes, theme } = this.props;
@@ -140,7 +134,7 @@ class FloatingActionButtonZoom extends React.Component {
 												id="standard-required"
 												type="text"
 												className="form-control form-control-lg"
-												label="Add A Note Title..."
+												label="Give It A Title..."
 												name="title"
 												margin="normal"
 												value={title}
@@ -150,7 +144,7 @@ class FloatingActionButtonZoom extends React.Component {
 												id="standard-required"
 												type="text"
 												className="form-control form-control-lg"
-												label="What On Your Mind..."
+												label="What's On Your Mind..."
 												name="textBody"
 												margin="normal"
 												value={textBody}

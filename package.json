@@ -13,7 +13,9 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
-    "react-swipeable-views": "^0.13.0"
+    "react-swipeable-views": "^0.13.0",
+    "riek": "^1.1.0",
+    "styled-components": "^4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

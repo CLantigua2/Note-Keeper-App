@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const Context = React.createContext();
 
-const reducer = (state, action) => {
+export const reducer = (state, action) => {
 	switch (action.type) {
 		case 'SET_SEARCH_TERM':
 			return {
@@ -16,6 +16,11 @@ const reducer = (state, action) => {
 				notes: [ ...action.payload ]
 			};
 		case 'GET_ALL_NOTES':
+			return {
+				...state,
+				notes: action.payload
+			};
+		case 'EDIT_NOTE':
 			return {
 				...state,
 				notes: action.payload
@@ -37,19 +42,41 @@ export class Provider extends Component {
 	};
 
 	componentDidMount() {
-		this.getAllNotes();
+		setTimeout(() => {
+			this.getAllNotes();
+		}, 1000);
 	}
 
 	getAllNotes = () => {
-		setTimeout(() => {
-			axios
-				.get('https://fe-notes.herokuapp.com/note/get/all')
-				.then((res) => {
-					this.setState({ notes: res.data });
-					console.log(res.data);
-				})
-				.catch((err) => console.log(err));
-		}, 5000);
+		axios
+			.get('https://fe-notes.herokuapp.com/note/get/all')
+			.then((res) => {
+				this.setState({ notes: res.data });
+				console.log(res.data);
+			})
+			.catch((err) => console.log(err));
+	};
+
+	getNoteId = (id) => {
+		axios
+			.get(`https://fe-notes.herokuapp.com/note/get/${id}`)
+			.then((res) => {
+				this.setState({ noteId: res.data });
+			})
+			.catch((err) => console.log(err));
+	};
+
+	editNote = ({ title, text, id }) => (dispatch) => {
+		axios
+			.put(`https://fe-notes.herokuapp.com/note/edit/${id}`, {
+				title,
+				textBody: text
+			})
+			.then((res) => {
+				console.log(res);
+				dispatch(this.getAllNotes());
+			})
+			.catch((err) => console.log(err));
 	};
 
 	handleChange = (e) => {
@@ -74,17 +101,25 @@ export class Provider extends Component {
 		}
 	};
 
+	handleSubmit = (e) => {
+		e.preventDefault();
+		this.editNote({ ...this.state, id: this.state.notes._id });
+	};
+
 	render() {
 		const { notes, searchTitle } = this.state;
+		// console.log(this.state);
 		return (
 			<Context.Provider
 				value={{
-					notes: notes,
-					searchTitle: searchTitle,
+					editNote: this.editNote,
+					notes,
+					searchTitle,
 					handleChange: this.handleChange,
 					addNote: this.addNote,
 					title: this.title,
-					textBody: this.textBody
+					textBody: this.textBody,
+					getAllNotes: this.getAllNotes
 				}}
 			>
 				{this.props.children}
@@ -92,5 +127,13 @@ export class Provider extends Component {
 		);
 	}
 }
+
+export const connectStore = (DependentComponent) => {
+	return class extends Component {
+		render() {
+			return <Consumer>{(context) => <DependentComponent {...context} />}</Consumer>;
+		}
+	};
+};
 
 export const Consumer = Context.Consumer;
