@@ -16,7 +16,7 @@ class NoteContainer extends React.Component {
 	}
 
 	render() {
-		const { notes, showMenu, getAllNotes, handleChange, handleSubmit } = this.props;
+		const { notes, showMenu, getAllNotes, handleChange, handleSubmit, deleteNote } = this.props;
 
 		if (notes === undefined || notes.length === 0) {
 			return <Spinner />;
@@ -29,6 +29,10 @@ class NoteContainer extends React.Component {
 							<Note
 								handleSubmit={() => {
 									return handleSubmit(note._id);
+								}}
+								deleteNote={() => {
+									console.log('click');
+									return deleteNote(note._id);
 								}}
 								handleChange={handleChange}
 								key={note._id}

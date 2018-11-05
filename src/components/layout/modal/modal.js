@@ -3,7 +3,6 @@ import './modal.css';
 import styled from 'styled-components';
 import Delete from '@material-ui/icons/DeleteForever';
 import Check from '@material-ui/icons/Check';
-import Cancel from '@material-ui/icons/Cancel';
 
 // import Axios from 'axios';
 
@@ -24,10 +23,9 @@ class ModalState extends React.Component {
 	};
 
 	render() {
-		console.log(this.state.show);
 		return (
 			<main>
-				<Modal show={this.state.show} handleClose={this.hideModal} deletePost={this.props.deletePost} />
+				<Modal show={this.state.show} handleClose={this.hideModal} deleteNote={this.props.deleteNote} />
 				<StyledSVG>
 					<Delete type="button" onClick={this.showModal} />
 				</StyledSVG>
@@ -36,7 +34,7 @@ class ModalState extends React.Component {
 	}
 }
 
-const Modal = ({ handleClose, show, deletePost }) => {
+const Modal = ({ handleClose, show, deleteNote }) => {
 	const showHideClassName = show ? 'modal display-block' : 'modal display-none';
 
 	return (
@@ -46,10 +44,8 @@ const Modal = ({ handleClose, show, deletePost }) => {
 					<p>Are You Sure you Want to delete this?</p>
 				</div>
 				<div className="buttons">
-					<StyledDeleteButton
-					// onClick={deletePost}
-					>
-						<Check />
+					<StyledDeleteButton>
+						<Check onClick={deleteNote} />
 					</StyledDeleteButton>
 					<StyledButton onClick={handleClose}>X</StyledButton>
 				</div>
@@ -57,8 +53,6 @@ const Modal = ({ handleClose, show, deletePost }) => {
 		</div>
 	);
 };
-
-export default ModalState;
 
 export const UnstyledButton = styled.button`
 	border: 0;
@@ -114,3 +108,5 @@ export const StyledSVG = styled.svg`
 	background: #ffffff;
 	filter: invert(100%);
 `;
+
+export default ModalState;

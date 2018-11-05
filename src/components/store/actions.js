@@ -53,3 +53,14 @@ export function handleSubmit(id) {
 		})
 		.catch((err) => console.log(err));
 }
+
+export function deleteNote(id) {
+	console.log('action');
+	axios
+		.delete(`https://fe-notes.herokuapp.com/note/delete/${id}`)
+		.then(() => {
+			getAllNotes();
+		})
+		.then(() => window.location.reload())
+		.catch((err) => console.log(err));
+}
