@@ -10,9 +10,9 @@ class NoteContainer extends React.Component {
 	};
 
 	componentDidMount() {
-		setTimeout(() => {
+		setInterval(() => {
 			this.props.getAllNotes();
-		}, 1000);
+		}, 5000);
 	}
 
 	render() {

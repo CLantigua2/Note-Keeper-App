@@ -38,7 +38,9 @@ export function addNote(e) {
 	if (title === '' && textBody === '') {
 		alert('Please edit at least one of the fields');
 	} else {
-		axios.post('https://fe-notes.herokuapp.com/note/create', { title, textBody });
+		axios
+			.post('https://fe-notes.herokuapp.com/note/create', { title, textBody })
+			.then(this.setState({ title: '', textBody: '' }));
 	}
 }
 
@@ -61,6 +63,5 @@ export function deleteNote(id) {
 		.then(() => {
 			getAllNotes();
 		})
-		.then(() => window.location.reload())
 		.catch((err) => console.log(err));
 }
